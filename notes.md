@@ -25,3 +25,11 @@ A: REFERENCES ties a column to another table's primary key, so the database enfo
 
 Q: What's the difference between the SQL Editor text box and the actual database?
 A: The text box is just a place to type — nothing happens until I click Run. Once I click Run, that action is done and saved in the database immediately. Deleting the text afterward doesn't undo it, since the database and the editor box are two separate things.
+
+SESSION 3:
+
+Q: What does JOIN actually do?
+A: It connects two separate tables together in one query, using a shared column between them — in this case, from_account in transactions matching account_id in accounts.
+
+Q: Why couldn't a plain SELECT on transactions alone show what I needed?
+A: Because transactions only stores account numbers (1, 2, 3...), not names. Without JOIN, I'd only see raw numbers — JOIN pulls in owner_name from accounts so I can see who the transaction actually belongs to.
