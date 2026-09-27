@@ -17,6 +17,16 @@ Table transactions {
   created_at timestamp
 }
 
+Table audit_log {
+  log_id int [pk]
+  txn_id int [not null]
+  action varchar(20)
+  old_balance decimal
+  new_balance decimal
+  logged_at timestamp
+}
+
 
 Ref: transactions.from_account > accounts.account_id
 Ref: transactions.to_account > accounts.account_id
+Ref: audit_log.txn_id > transactions.txn_id
