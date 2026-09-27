@@ -1,0 +1,22 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table accounts {
+  account_id int [pk]
+  owner_name varchar
+  balance decimal
+  created_at timestamp
+}
+
+Table transactions {
+  txn_id int [pk]
+  from_account int [not null]
+  to_account int [not null]
+  amount decimal
+  status varchar(20)
+  created_at timestamp
+}
+
+
+Ref: transactions.from_account > accounts.account_id
+Ref: transactions.to_account > accounts.account_id
