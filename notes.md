@@ -1,3 +1,5 @@
+SESSION 1:
+
 Q: Why do we need a separate table for account IDs (why unique ID matters)?
 A: Every account needs its own number so nothing else gets confused. If two people have the same name, the computer can't tell them apart by name — but the ID number is always different, so it always knows exactly which account you mean.
 
@@ -15,3 +17,11 @@ A: It just says what type of thing happened — like "transfer," "deposit," or "
 
 Q: Why is audit_log "many" and transactions "one" in their relationship?
 A: Because one transaction could get more than one audit entry over time (like the original transfer, and later a correction). But each audit entry only ever points back to one single transaction.
+
+SESSION 2:
+
+Q: What does REFERENCES actually do, and what did the test prove?
+A: REFERENCES ties a column to another table's primary key, so the database enforces that the value must actually exist there. When I tried inserting a transaction with a fake account number (999), Postgres rejected it — proof the constraint was real, not just written on paper.
+
+Q: What's the difference between the SQL Editor text box and the actual database?
+A: The text box is just a place to type — nothing happens until I click Run. Once I click Run, that action is done and saved in the database immediately. Deleting the text afterward doesn't undo it, since the database and the editor box are two separate things.
