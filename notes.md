@@ -33,3 +33,17 @@ A: It connects two separate tables together in one query, using a shared column 
 
 Q: Why couldn't a plain SELECT on transactions alone show what I needed?
 A: Because transactions only stores account numbers (1, 2, 3...), not names. Without JOIN, I'd only see raw numbers — JOIN pulls in owner_name from accounts so I can see who the transaction actually belongs to.
+
+SESSION 4:
+
+Q: What does the transfer_funds function actually do, in order?
+A: It takes three inputs — who's sending, who's receiving, and how much. It adds the amount to the receiver's balance, subtracts it from the sender's balance, then inserts a row into transactions recording that the transfer happened.
+
+Q: Why didn't I need to write ROLLBACK manually anywhere in this function?
+A: Because Postgres treats everything between BEGIN and END as one atomic block automatically. If any statement inside fails, everything before it in that block reverses on its own — I don't need to write that logic myself.
+
+Q: Why were the parameters named p*to_account, p_from_account, p_amount instead of just to_account, from_account, amount?
+A: Because the transactions table already has columns with those exact names. If the function parameters used the same names, Postgres couldn't tell whether I meant the parameter or the table column inside the function body. The p* prefix avoids that conflict.
+
+Q: What did the repeated txn_id entries (11, 12, 13) teach me?
+A: That calling the function multiple times isn't a bug — each call is a real, separate transaction, and the transactions table (with its timestamps) gave me a clear audit trail to trace exactly what happened and when, instead of just a confusing balance number.
